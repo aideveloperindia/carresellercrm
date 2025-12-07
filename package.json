@@ -4,13 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "cd apps/web && next dev -p 4000",
-    "build": "cd apps/web && next build",
+    "build": "npm run prisma:generate && cd apps/web && next build",
     "start": "cd apps/web && next start -p 4000",
     "lint": "cd apps/web && next lint",
     "seed": "tsx scripts/seedAdmin.ts",
     "prisma:generate": "prisma generate",
     "prisma:push": "prisma db push",
-    "prisma:studio": "prisma studio"
+    "prisma:studio": "prisma studio",
+    "postinstall": "npm run prisma:generate"
   },
   "dependencies": {
     "@prisma/client": "^5.7.1",

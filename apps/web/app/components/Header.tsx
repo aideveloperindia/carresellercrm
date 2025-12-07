@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter, usePathname } from 'next/navigation'
 import { useState } from 'react'
 
@@ -36,8 +37,14 @@ export default function Header() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 group">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
-              <span className="text-white text-xl font-bold">C</span>
+            <div className="w-10 h-10 flex items-center justify-center">
+              <Image
+                src="/raghavendra-logo.png"
+                alt="Car Reseller CRM Logo"
+                width={40}
+                height={40}
+                className="object-contain"
+              />
             </div>
             <span className="text-xl font-bold text-gray-900 hidden sm:block">
               Car Reseller CRM

@@ -34,9 +34,6 @@ export async function GET(request: NextRequest) {
     const cars = await prisma.car.findMany({
       where,
       orderBy: { createdAt: 'desc' },
-      include: {
-        // We'll manually fetch seller info since Prisma doesn't support relations with MongoDB ObjectId
-      },
     })
 
     // Fetch seller information for cars that have sellerId
