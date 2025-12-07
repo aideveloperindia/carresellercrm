@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "cd apps/web && next dev -p 4000",
-    "build": "npm run prisma:generate && cd apps/web && next build",
+    "build": "cd apps/web && next build",
     "start": "cd apps/web && next start -p 4000",
     "lint": "cd apps/web && next lint",
     "seed": "tsx scripts/seedAdmin.ts",
