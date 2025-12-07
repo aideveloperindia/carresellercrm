@@ -4,14 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "cd ../.. && prisma generate && cd apps/web && next build",
+    "build": "prisma generate --schema=../../prisma/schema.prisma && next build",
     "start": "next start",
     "lint": "next lint",
     "seed": "tsx scripts/seedAdmin.ts",
-    "prisma:generate": "cd ../.. && prisma generate",
-    "prisma:push": "cd ../.. && prisma db push",
-    "prisma:studio": "cd ../.. && prisma studio",
-    "postinstall": "cd ../.. && prisma generate"
+    "prisma:generate": "prisma generate --schema=../../prisma/schema.prisma",
+    "prisma:push": "prisma db push --schema=../../prisma/schema.prisma",
+    "prisma:studio": "prisma studio --schema=../../prisma/schema.prisma",
+    "postinstall": "prisma generate --schema=../../prisma/schema.prisma"
   },
   "dependencies": {
     "@prisma/client": "^5.7.1",
