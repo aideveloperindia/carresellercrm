@@ -35,9 +35,10 @@ export default function RootLayout({
                 <Image
                   src="/A-logo-transparent.png"
                   alt="AI Developer India Logo"
-                  width={24}
-                  height={24}
+                  width={32}
+                  height={32}
                   className="object-contain"
+                  priority
                 />
                 <span className="font-medium text-gray-700">AI Developer India</span>
               </Link>
