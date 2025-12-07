@@ -1,7 +1,0 @@
-{
-  "/cars/page": "app/cars/page.js",
-  "/auth/change-password/page": "app/auth/change-password/page.js",
-  "/sellers/page": "app/sellers/page.js",
-  "/page": "app/page.js",
-  "/buyers/page": "app/buyers/page.js"
-}
