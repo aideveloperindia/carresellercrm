@@ -1,0 +1,126 @@
+// This is your Prisma schema file for MongoDB
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  email        String   @unique
+  passwordHash String
+  name         String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  deleted      Boolean  @default(false)
+
+  @@map("admins")
+}
+
+model Buyer {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  phone        String
+  email        String?
+  address      String?
+  preferences  Json?    // Flexible field for buyer preferences
+  visitsCount  Int      @default(0)
+  notes        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  deleted      Boolean  @default(false)
+
+  @@map("buyers")
+}
+
+model Seller {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  phone       String
+  email       String?
+  address     String?
+  carDetails  Json?    // Car details the seller is offering
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  deleted     Boolean  @default(false)
+
+  @@map("sellers")
+}
+
+model Car {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  brand        String
+  model        String
+  year         Int?
+  registration String?
+  vin          String?
+  mileage      Int?     // in km
+  price        Float
+  priceHistory Json?    // Array of { price, date, notes }
+  status       String   @default("available") // available, sold, reserved, maintenance
+  color        String?
+  fuelType     String?  // petrol, diesel, electric, hybrid
+  transmission String?  // manual, automatic
+  notes        String?
+  sellerId     String?  @db.ObjectId
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  deleted      Boolean  @default(false)
+
+  @@map("cars")
+}
+
+model Lead {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  buyerId      String?  @db.ObjectId
+  carId        String?  @db.ObjectId
+  source       String?  // website, referral, walk-in, etc.
+  status       String   @default("new") // new, contacted, qualified, converted, lost
+  tags         Json?    // Array of strings
+  visitsCount  Int      @default(0)
+  notes        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  deleted      Boolean  @default(false)
+
+  @@map("leads")
+}
+
+model FollowUp {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  leadId      String?  @db.ObjectId
+  buyerId     String?  @db.ObjectId
+  sellerId    String?  @db.ObjectId
+  carId       String?  @db.ObjectId
+  type        String   // call, visit, test-drive, payment, etc.
+  scheduledAt DateTime
+  notes       String?
+  completed   Boolean  @default(false)
+  completedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  deleted     Boolean  @default(false)
+
+  @@map("followups")
+}
+
+model MessageLog {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  phone       String
+  body        String
+  waLink      String
+  recipientId String?  // Can reference buyer, seller, or lead
+  recipientType String? // buyer, seller, lead
+  createdAt   DateTime @default(now())
+  deleted     Boolean  @default(false)
+
+  @@map("messagelogs")
+}
+
+
+
+
