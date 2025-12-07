@@ -286,72 +286,125 @@ export default function CarsPage() {
           </div>
         )}
 
-        <div className="bg-white rounded-lg shadow overflow-hidden">
-          <table className="w-full">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="px-4 py-3 text-left">Brand</th>
-                <th className="px-4 py-3 text-left">Model</th>
-                <th className="px-4 py-3 text-left">Year</th>
-                <th className="px-4 py-3 text-left">Price</th>
-                <th className="px-4 py-3 text-left">Seller</th>
-                <th className="px-4 py-3 text-left">Status</th>
-                <th className="px-4 py-3 text-left">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {cars.map((car) => (
-                <tr key={car.id} className="border-t">
-                  <td className="px-4 py-3">{car.brand}</td>
-                  <td className="px-4 py-3">{car.model}</td>
-                  <td className="px-4 py-3">{car.year || '-'}</td>
-                  <td className="px-4 py-3">₹{car.price.toLocaleString()}</td>
-                  <td className="px-4 py-3">
-                    {car.seller ? (
-                      <div className="text-sm">
-                        <div className="font-medium text-gray-900">{car.seller.name}</div>
-                        {car.seller.phone && (
-                          <div className="text-gray-600 text-xs">{car.seller.phone}</div>
+        <>
+          {/* Desktop Table View */}
+          <div className="hidden md:block bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
+                  <tr>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Brand</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Model</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Year</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Price</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Seller</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Status</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {cars.map((car) => (
+                    <tr key={car.id} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">{car.brand}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-gray-700">{car.model}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-gray-600">{car.year || '-'}</td>
+                      <td className="px-6 py-4 whitespace-nowrap font-semibold text-gray-900">₹{car.price.toLocaleString()}</td>
+                      <td className="px-6 py-4">
+                        {car.seller ? (
+                          <div className="text-sm">
+                            <div className="font-medium text-gray-900">{car.seller.name}</div>
+                            {car.seller.phone && (
+                              <div className="text-gray-600 text-xs">{car.seller.phone}</div>
+                            )}
+                          </div>
+                        ) : (
+                          <span className="text-gray-400 text-sm">-</span>
                         )}
-                      </div>
-                    ) : (
-                      <span className="text-gray-400 text-sm">-</span>
-                    )}
-                  </td>
-                  <td className="px-4 py-3">
-                    <select
-                      value={car.status}
-                      onChange={(e) => handleStatusChange(car.id, e.target.value)}
-                      className="px-2 py-1 border rounded"
-                    >
-                      <option value="available">Available</option>
-                      <option value="sold">Sold</option>
-                      <option value="reserved">Reserved</option>
-                      <option value="maintenance">Maintenance</option>
-                    </select>
-                  </td>
-                  <td className="px-4 py-3">
-                    <button
-                      onClick={() => {
-                        const newPrice = prompt('Enter new price:')
-                        if (newPrice) {
-                          fetch(`/api/cars/${car.id}`, {
-                            method: 'PUT',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ price: parseFloat(newPrice) }),
-                          }).then(() => fetchCars())
-                        }
-                      }}
-                      className="bg-blue-500 text-white px-2 py-1 rounded text-sm"
-                    >
-                      Update Price
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <select
+                          value={car.status}
+                          onChange={(e) => handleStatusChange(car.id, e.target.value)}
+                          className="px-3 py-1.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                          <option value="available">Available</option>
+                          <option value="sold">Sold</option>
+                          <option value="reserved">Reserved</option>
+                          <option value="maintenance">Maintenance</option>
+                        </select>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <button
+                          onClick={() => {
+                            const newPrice = prompt('Enter new price:')
+                            if (newPrice) {
+                              fetch(`/api/cars/${car.id}`, {
+                                method: 'PUT',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ price: parseFloat(newPrice) }),
+                              }).then(() => fetchCars())
+                            }
+                          }}
+                          className="px-3 py-1.5 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm font-medium"
+                        >
+                          Update Price
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Mobile Card View */}
+          <div className="md:hidden space-y-4">
+            {cars.map((car) => (
+              <div key={car.id} className="bg-white rounded-xl shadow-sm p-4 border border-gray-100">
+                <div className="mb-3">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                    {car.brand} {car.model}
+                    {car.year && ` (${car.year})`}
+                  </h3>
+                  <div className="text-xl font-bold text-gray-900 mb-2">₹{car.price.toLocaleString()}</div>
+                  {car.seller && (
+                    <div className="text-sm text-gray-600 mb-2">
+                      <div className="font-medium">Seller: {car.seller.name}</div>
+                      {car.seller.phone && <div className="text-xs">{car.seller.phone}</div>}
+                    </div>
+                  )}
+                </div>
+                <div className="flex flex-col gap-2 pt-3 border-t border-gray-200">
+                  <select
+                    value={car.status}
+                    onChange={(e) => handleStatusChange(car.id, e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="available">Available</option>
+                    <option value="sold">Sold</option>
+                    <option value="reserved">Reserved</option>
+                    <option value="maintenance">Maintenance</option>
+                  </select>
+                  <button
+                    onClick={() => {
+                      const newPrice = prompt('Enter new price:')
+                      if (newPrice) {
+                        fetch(`/api/cars/${car.id}`, {
+                          method: 'PUT',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ price: parseFloat(newPrice) }),
+                        }).then(() => fetchCars())
+                      }
+                    }}
+                    className="w-full px-3 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm font-medium"
+                  >
+                    Update Price
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
       </main>
     </div>
   )

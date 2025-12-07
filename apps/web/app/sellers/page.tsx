@@ -344,7 +344,7 @@ export default function SellersPage() {
                 <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
                   <span>🚗</span> Car Details (Car the seller is offering)
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">Brand *</label>
                     <select
@@ -493,7 +493,7 @@ export default function SellersPage() {
                 </div>
               </div>
 
-              <div className="flex justify-end gap-3 pt-4">
+              <div className="flex flex-col sm:flex-row justify-end gap-3 pt-4">
                 <button
                   type="button"
                   onClick={() => {
@@ -506,14 +506,14 @@ export default function SellersPage() {
                     })
                     setAvailableModels([])
                   }}
-                  className="px-6 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium transition-colors"
+                  className="w-full sm:w-auto px-6 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-6 py-2.5 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-lg hover:from-green-700 hover:to-emerald-700 transition-all shadow-md hover:shadow-lg font-medium disabled:opacity-50"
+                  className="w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-lg hover:from-green-700 hover:to-emerald-700 transition-all shadow-md hover:shadow-lg font-medium disabled:opacity-50"
                 >
                   {submitting ? 'Creating...' : 'Create Seller'}
                 </button>
@@ -536,59 +536,106 @@ export default function SellersPage() {
             </button>
           </div>
         ) : (
-          <div className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
-                  <tr>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Name</th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Contact</th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Email</th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Car Details</th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {sellers.map((seller) => (
-                    <tr key={seller.id} className="hover:bg-gray-50 transition-colors">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="text-gray-900 font-medium">{seller.name}</span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="text-gray-900">{seller.phone}</span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-gray-600">
-                        {seller.email || <span className="text-gray-400">-</span>}
-                      </td>
-                      <td className="px-6 py-4">
-                        {seller.carDetails ? (
-                          <div className="text-sm">
-                            <div className="font-medium text-gray-900">
-                              {seller.carDetails.brand} {seller.carDetails.model}
-                              {seller.carDetails.year && ` (${seller.carDetails.year})`}
-                            </div>
-                            {seller.carDetails.price && (
-                              <div className="text-gray-600">₹{seller.carDetails.price.toLocaleString()}</div>
-                            )}
-                            <div className="text-gray-500 text-xs mt-1">
-                              {seller.carDetails.color && `${seller.carDetails.color} • `}
-                              {seller.carDetails.fuelType && `${seller.carDetails.fuelType} • `}
-                              {seller.carDetails.transmission}
-                            </div>
-                          </div>
-                        ) : (
-                          <span className="text-gray-400 text-sm">No car details</span>
-                        )}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <WaButton phone={seller.phone} recipientId={seller.id} recipientType="seller" />
-                      </td>
+          <>
+            {/* Desktop Table View */}
+            <div className="hidden md:block bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
+                    <tr>
+                      <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Name</th>
+                      <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Contact</th>
+                      <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Email</th>
+                      <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Car Details</th>
+                      <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Actions</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {sellers.map((seller) => (
+                      <tr key={seller.id} className="hover:bg-gray-50 transition-colors">
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className="text-gray-900 font-medium">{seller.name}</span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className="text-gray-900">{seller.phone}</span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-gray-600">
+                          {seller.email || <span className="text-gray-400">-</span>}
+                        </td>
+                        <td className="px-6 py-4">
+                          {seller.carDetails ? (
+                            <div className="text-sm">
+                              <div className="font-medium text-gray-900">
+                                {seller.carDetails.brand} {seller.carDetails.model}
+                                {seller.carDetails.year && ` (${seller.carDetails.year})`}
+                              </div>
+                              {seller.carDetails.price && (
+                                <div className="text-gray-600">₹{seller.carDetails.price.toLocaleString()}</div>
+                              )}
+                              <div className="text-gray-500 text-xs mt-1">
+                                {seller.carDetails.color && `${seller.carDetails.color} • `}
+                                {seller.carDetails.fuelType && `${seller.carDetails.fuelType} • `}
+                                {seller.carDetails.transmission}
+                              </div>
+                            </div>
+                          ) : (
+                            <span className="text-gray-400 text-sm">No car details</span>
+                          )}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <WaButton phone={seller.phone} recipientId={seller.id} recipientType="seller" />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
+
+            {/* Mobile Card View */}
+            <div className="md:hidden space-y-4">
+              {sellers.map((seller) => (
+                <div key={seller.id} className="bg-white rounded-xl shadow-sm p-4 border border-gray-100">
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-1">{seller.name}</h3>
+                      <div className="space-y-1 text-sm text-gray-600">
+                        <div className="flex items-center gap-2">
+                          <span>📞</span>
+                          <span>{seller.phone}</span>
+                        </div>
+                        {seller.email && (
+                          <div className="flex items-center gap-2">
+                            <span>✉️</span>
+                            <span>{seller.email}</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <WaButton phone={seller.phone} recipientId={seller.id} recipientType="seller" />
+                  </div>
+                  {seller.carDetails && (
+                    <div className="mt-3 pt-3 border-t border-gray-200">
+                      <div className="text-sm">
+                        <div className="font-medium text-gray-900 mb-1">
+                          {seller.carDetails.brand} {seller.carDetails.model}
+                          {seller.carDetails.year && ` (${seller.carDetails.year})`}
+                        </div>
+                        {seller.carDetails.price && (
+                          <div className="text-gray-600 font-semibold mb-1">₹{seller.carDetails.price.toLocaleString()}</div>
+                        )}
+                        <div className="text-gray-500 text-xs">
+                          {seller.carDetails.color && `${seller.carDetails.color} • `}
+                          {seller.carDetails.fuelType && `${seller.carDetails.fuelType} • `}
+                          {seller.carDetails.transmission}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </>
         )}
 
         {/* Stats Footer */}

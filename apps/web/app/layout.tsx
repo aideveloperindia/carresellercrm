@@ -33,7 +33,7 @@ export default function RootLayout({
                 className="flex items-center gap-2 hover:opacity-80 transition-opacity"
               >
                 <Image
-                  src="/raghavendra-logo.png"
+                  src="/A-logo-transparent.png"
                   alt="AI Developer India Logo"
                   width={24}
                   height={24}

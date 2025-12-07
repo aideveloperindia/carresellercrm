@@ -44,11 +44,11 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-indigo-50 px-4 py-8">
       <div className="w-full max-w-md">
         {/* Logo/Header Section */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 mb-4">
+        <div className="text-center mb-6 sm:mb-8">
+          <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 mb-3 sm:mb-4">
             <Image
               src="/raghavendra-logo.png"
               alt="Car Reseller CRM Logo"
@@ -57,12 +57,12 @@ export default function LoginPage() {
               className="object-contain"
             />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Car Reseller CRM</h1>
-          <p className="text-gray-600">Sign in to your account</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Car Reseller CRM</h1>
+          <p className="text-sm sm:text-base text-gray-600">Sign in to your account</p>
         </div>
 
         {/* Login Card */}
-        <div className="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
+        <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-xl border border-gray-100">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email Field */}
             <div>
@@ -156,11 +156,6 @@ export default function LoginPage() {
             </button>
           </form>
         </div>
-
-        {/* Footer */}
-        <p className="text-center text-sm text-gray-600 mt-6">
-          Secure login powered by Car Reseller CRM
-        </p>
       </div>
     </div>
   )
